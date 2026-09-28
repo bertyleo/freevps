@@ -1,0 +1,33 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - TZ=Asia/Jakarta
+      - GENERIC_TIMEZONE=Asia/Jakarta
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+  waha:
+    image: devlikeapro/waha:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - WAHA_HOSTNAME=0.0.0.0
+      - WAHA_API_KEY=value
+      - WAHA_NO_API_KEY=true
+      - WAHA_DASHBOARD_PASSWORD = Value
+      - WAHA_DASHBOARD_NO_PASSWORD = true
+      - WAHA_SWAGGER_PASSWORD = Value
+      - WAHA_SWAGGER_NO_PASSWORD = true
+    volumes:
+      - waha_sessions:/app/.sessions
+
+volumes:
+  n8n_data:
+  waha_sessions:
